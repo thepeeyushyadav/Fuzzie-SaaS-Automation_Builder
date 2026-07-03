@@ -1,96 +1,102 @@
-"use client";
+'use client'
 
-import { cn } from "@/lib/utils";
-import React, { useEffect, useState, useRef, useCallback } from "react";
-import Image from "next/image";
-
-type ClientItem = {
-  href: string;
-};
+import { cn } from '@/lib/utils'
+import Image from 'next/image'
+import React, { useEffect, useState } from 'react'
 
 export const InfiniteMovingCards = ({
   items,
-  direction = "left",
-  speed = "fast",
+  direction = 'left',
+  speed = 'fast',
   pauseOnHover = true,
   className,
 }: {
-  items: ClientItem[];
-  direction?: "left" | "right";
-  speed?: "fast" | "normal" | "slow";
-  pauseOnHover?: boolean;
-  className?: string;
+  items: {
+    href: string
+  }[]
+  direction?: 'left' | 'right'
+  speed?: 'fast' | 'normal' | 'slow'
+  pauseOnHover?: boolean
+  className?: string
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scrollerRef = useRef<HTMLUListElement>(null);
-  const [start, setStart] = useState(false);
-
-  const getDirection = useCallback(() => {
-    if (containerRef.current) {
-      containerRef.current.style.setProperty(
-        "--animation-direction",
-        direction === "left" ? "forwards" : "reverse"
-      );
-    }
-  }, [direction]);
-
-  const getSpeed = useCallback(() => {
-    if (containerRef.current) {
-      const duration =
-        speed === "fast" ? "20s" : speed === "normal" ? "40s" : "80s";
-      containerRef.current.style.setProperty("--animation-duration", duration);
-    }
-  }, [speed]);
-
-  const addAnimation = useCallback(() => {
-    if (containerRef.current && scrollerRef.current) {
-      const scrollerContent = Array.from(scrollerRef.current.children);
-      scrollerContent.forEach((item) => {
-        const duplicatedItem = item.cloneNode(true);
-        if (scrollerRef.current) {
-          scrollerRef.current.appendChild(duplicatedItem);
-        }
-      });
-      getDirection();
-      getSpeed();
-      setStart(true);
-    }
-  }, [getDirection, getSpeed]);
+  const containerRef = React.useRef<HTMLDivElement>(null)
+  const scrollerRef = React.useRef<HTMLUListElement>(null)
 
   useEffect(() => {
-    addAnimation();
-  }, [addAnimation]);
+    addAnimation()
+  }, [])
+  
+  const [start, setStart] = useState(false)
+  function addAnimation() {
+    if (containerRef.current && scrollerRef.current) {
+      const scrollerContent = Array.from(scrollerRef.current.children)
 
+      scrollerContent.forEach((item) => {
+        const duplicatedItem = item.cloneNode(true)
+        if (scrollerRef.current) {
+          scrollerRef.current.appendChild(duplicatedItem)
+        }
+      })
+
+      getDirection()
+      getSpeed()
+      setStart(true)
+    }
+  }
+  const getDirection = () => {
+    if (containerRef.current) {
+      if (direction === 'left') {
+        containerRef.current.style.setProperty(
+          '--animation-direction',
+          'forwards'
+        )
+      } else {
+        containerRef.current.style.setProperty(
+          '--animation-direction',
+          'reverse'
+        )
+      }
+    }
+  }
+  const getSpeed = () => {
+    if (containerRef.current) {
+      if (speed === 'fast') {
+        containerRef.current.style.setProperty('--animation-duration', '20s')
+      } else if (speed === 'normal') {
+        containerRef.current.style.setProperty('--animation-duration', '40s')
+      } else {
+        containerRef.current.style.setProperty('--animation-duration', '80s')
+      }
+    }
+  }
+  console.log(items)
   return (
     <div
       ref={containerRef}
       className={cn(
-        "scroller relative z-20 max-w-7xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
+        'scroller relative z-20  max-w-7xl overflow-hidden  [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]',
         className
       )}
     >
       <ul
         ref={scrollerRef}
         className={cn(
-          "flex min-w-full shrink-0 gap-8 py-4 w-max flex-nowrap items-center",
-          start && "animate-scroll",
-          pauseOnHover && "hover:[animation-play-state:paused]"
+          ' flex min-w-full shrink-0 gap-10 py-4 w-max flex-nowrap',
+          start && 'animate-scroll ',
+          pauseOnHover && 'hover:[animation-play-state:paused]'
         )}
       >
         {items.map((item, idx) => (
-          <li
-            key={idx}
-            className="w-[150px] h-[80px] relative flex-shrink-0 flex items-center justify-center"
-          >
-            <Image
-              src={item.href}
-              alt={`client-${idx + 1}`}
-              fill
-              className="object-contain filter brightness-75 hover:brightness-100 transition-all duration-300"
-            />
-          </li>
+          <Image
+            width={170}
+            height={1}
+            src={item.href}
+            alt={item.href}
+            className=" relative rounded-2xl  object-contain opacity-50"
+            key={item.href}
+          />
         ))}
       </ul>
     </div>
-  );
-};
+  )
+}

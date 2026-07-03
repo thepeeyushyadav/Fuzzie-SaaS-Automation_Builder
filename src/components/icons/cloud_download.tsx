@@ -1,8 +1,9 @@
+import clsx from 'clsx'
 import React from 'react'
 
-type Props = { selected?: boolean }
+type Props = { selected: boolean }
 
-const CloudDownload = ({ selected }: Props) => {
+const Templates = ({ selected }: Props) => {
   return (
     <svg
       width="24"
@@ -12,23 +13,23 @@ const CloudDownload = ({ selected }: Props) => {
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M9 17.01V11H15V17.01H17.01C17.84 17.01 18.26 18.01 17.66 18.61L12.66 23.61C12.29 23.98 11.7 23.98 11.33 23.61L6.33 18.61C5.73 18.01 6.16 17.01 6.99 17.01H9Z"
-        stroke={selected ? '#fff' : 'rgba(255,255,255,0.4)'}
-        strokeWidth="1.5"
-        strokeMiterlimit="10"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M22 9C22 12.866 18.866 16 15 16H7C4.23858 16 2 13.7614 2 11C2 8.23858 4.23858 6 7 6C7.54527 6 8.07015 6.08728 8.56143 6.24864C9.63037 3.75042 12.1108 2 15 2C18.866 2 22 5.13401 22 9Z"
+        className={clsx(
+          'dark:group-hover:fill-[#C8C7FF] transition-all dark:fill-[#353346] fill-[#BABABB] group-hover:fill-[#7540A9]',
+          { 'dark:!fill-[#C8C7FF] fill-[#7540A9] ': selected }
+        )}
       />
       <path
-        d="M15 11H17.5C18.88 11 20.13 10.31 20.88 9.2C21.87 7.73 22 5.87 21.17 4.26C20.13 2.24 17.94 1 15.63 1C14.93 1 14.24 1.14 13.59 1.41C12.72 -0.1 11.12 -0.44 9.82 0.15C8.53 0.74 7.79 2.14 8.05 3.54C6.38 3.82 4.93 4.84 4.08 6.28C2.68 8.47 3.28 11.28 5.39 12.77C6.5 13.57 7.84 14 9.2 14H9"
-        stroke={selected ? '#fff' : 'rgba(255,255,255,0.4)'}
-        strokeWidth="1.5"
-        strokeMiterlimit="10"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        d="M9.70711 17.2929C9.31658 16.9024 8.68342 16.9024 8.29289 17.2929C7.90237 17.6834 7.90237 18.3166 8.29289 18.7071L11.2929 21.7071C11.4874 21.9016 11.7421 21.9992 11.997 22L12 22L12.003 22C12.1375 21.9996 12.2657 21.9727 12.3828 21.9241C12.5007 21.8753 12.6112 21.803 12.7071 21.7071L15.7071 18.7071C16.0976 18.3166 16.0976 17.6834 15.7071 17.2929C15.3166 16.9024 14.6834 16.9024 14.2929 17.2929L13 18.5858V13C13 12.4477 12.5523 12 12 12C11.4477 12 11 12.4477 11 13V18.5858L9.70711 17.2929Z"
+        className={clsx(
+          'dark:group-hover:fill-[#9F54FF] transition-all dark:fill-[#C0BFC4] fill-[#5B5966] group-hover:fill-[#BD8AFF] ',
+          { 'dark:!fill-[#7540A9] fill-[#BD8AFF] ': selected }
+        )}
       />
     </svg>
   )
 }
 
-export default CloudDownload
+export default Templates

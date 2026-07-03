@@ -1,6 +1,7 @@
+import clsx from 'clsx'
 import React from 'react'
 
-type Props = { selected?: boolean }
+type Props = { selected: boolean }
 
 const Home = ({ selected }: Props) => {
   return (
@@ -12,18 +13,20 @@ const Home = ({ selected }: Props) => {
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M9.02 2.84L3.63 7.04C2.73 7.74 2 9.23 2 10.36V17.77C2 20.09 3.89 21.99 6.21 21.99H17.79C20.11 21.99 22 20.09 22 17.78V10.5C22 9.29 21.19 7.74 20.2 7.05L14.02 2.72C12.62 1.74 10.37 1.79 9.02 2.84Z"
-        stroke={selected ? '#fff' : 'rgba(255,255,255,0.4)'}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M2 11.3361C2 10.4857 2.36096 9.67518 2.99311 9.10625L9.9931 2.80625C11.134 1.77943 12.866 1.77943 14.0069 2.80625L21.0069 9.10625C21.639 9.67518 22 10.4857 22 11.3361V19C22 20.6569 20.6569 22 19 22H16L15.9944 22H8.00558L8 22H5C3.34315 22 2 20.6569 2 19V11.3361Z"
+        className={clsx(
+          'dark:group-hover:fill-[#C8C7FF] transition-all dark:fill-[#353346] fill-[#C0BFC4] group-hover:fill-[#7540A9]',
+          { 'dark:!fill-[#C8C7FF] !fill-[#7540A9] ': selected }
+        )}
       />
       <path
-        d="M12 17.99V14.99"
-        stroke={selected ? '#fff' : 'rgba(255,255,255,0.4)'}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        d="M9 16C9 14.8954 9.89543 14 11 14H13C14.1046 14 15 14.8954 15 16V22H9V16Z"
+        className={clsx(
+          'dark:group-hover:fill-[#9F54FF] transition-all dark:fill-[#C0BFC4] fill-[#5B5966] group-hover:fill-[#BD8AFF] ',
+          { 'dark:!fill-[#9F54FF] fill-[#BD8AFF]': selected }
+        )}
       />
     </svg>
   )

@@ -1,6 +1,7 @@
+import clsx from 'clsx'
 import React from 'react'
 
-type Props = { selected?: boolean }
+type Props = { selected: boolean }
 
 const Workflows = ({ selected }: Props) => {
   return (
@@ -12,36 +13,11 @@ const Workflows = ({ selected }: Props) => {
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M9 11H15"
-        stroke={selected ? '#fff' : 'rgba(255,255,255,0.4)'}
-        strokeWidth="1.5"
-        strokeMiterlimit="10"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M9 15H12"
-        stroke={selected ? '#fff' : 'rgba(255,255,255,0.4)'}
-        strokeWidth="1.5"
-        strokeMiterlimit="10"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M10 6H14C16 6 16 5 16 4C16 2 15 2 14 2H10C9 2 8 2 8 4C8 6 9 6 10 6Z"
-        stroke={selected ? '#fff' : 'rgba(255,255,255,0.4)'}
-        strokeWidth="1.5"
-        strokeMiterlimit="10"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M16 4.02002C19.33 4.20002 21 5.43002 21 10V16C21 20 20 22 15 22H9C4 22 3 20 3 16V10C3 5.44002 4.67 4.20002 8 4.02002"
-        stroke={selected ? '#fff' : 'rgba(255,255,255,0.4)'}
-        strokeWidth="1.5"
-        strokeMiterlimit="10"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        d="M15.0034 4.69724C15.451 2.17765 12.2728 0.692639 10.6273 2.65246L3.58895 11.0353C2.22322 12.6619 3.37965 15.1429 5.50357 15.1429H9.7351L8.99616 19.3027C8.54859 21.8223 11.7267 23.3073 13.3722 21.3475L20.4107 12.9647C21.7764 11.3381 20.62 8.85714 18.496 8.85714H14.2645L15.0034 4.69724Z"
+        className={clsx(
+          'dark:group-hover:fill-[#C8C7FF] transition-all dark:fill-[#353346] fill-[#BABABB] group-hover:fill-[#7540A9]',
+          { 'dark:!fill-[#C8C7FF] !fill-[#7540A9] ': selected }
+        )}
       />
     </svg>
   )
