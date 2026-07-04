@@ -1,61 +1,70 @@
-'use client'
-import React, { createContext, useContext, useState } from 'react'
+"use client";
+import { createContext, useContext, useEffect, useState } from "react";
 
-interface ModalContextType {
-  isOpen: boolean
-  setOpen: (modal: React.ReactNode, fetchData?: () => Promise<void>) => void
-  setClose: () => void
-  data: {
-    user?: {
-      name?: string | null
-      email?: string | null
-      image?: string | null
-    }
-  }
+interface ModalProviderProps {
+  children: React.ReactNode;
 }
 
-export const ModalContext = createContext<ModalContextType>({
-  isOpen: false,
-  setOpen: () => {},
-  setClose: () => {},
-  data: {},
-})
+export type ModalData = {};
 
-const ModalProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [showingModal, setShowingModal] = useState<React.ReactNode>(null)
+type ModalContextType = {
+  data: ModalData;
+  isOpen: boolean;
+  setOpen: (modal: React.ReactNode, fetchData?: () => Promise<any>) => void;
+  setClose: () => void;
+};
+
+export const ModalContext = createContext<ModalContextType>({
+  data: {},
+  isOpen: false,
+  setOpen: (modal: React.ReactNode, fetchData?: () => Promise<any>) => {},
+  setClose: () => {},
+});
+
+const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [data, setData] = useState<ModalData>({});
+  const [showingModal, setShowingModal] = useState<React.ReactNode>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const setOpen = async (
     modal: React.ReactNode,
-    fetchData?: () => Promise<void>
+    fetchData?: () => Promise<any>,
   ) => {
-    if (fetchData) {
-      await fetchData()
+    if (modal) {
+      if (fetchData) {
+        setData({ ...data, ...(await fetchData()) } || {});
+      }
+      setShowingModal(modal);
+      setIsOpen(true);
     }
-    setShowingModal(modal)
-    setIsOpen(true)
-  }
+  };
 
   const setClose = () => {
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+    setData({});
+  };
+
+  if (!isMounted) return null;
 
   return (
-    <ModalContext.Provider value={{ isOpen, setOpen, setClose, data: {} }}>
+    <ModalContext.Provider value={{ data, setOpen, setClose, isOpen }}>
       {children}
       {showingModal}
     </ModalContext.Provider>
-  )
-}
+  );
+};
 
 export const useModal = () => {
-  const context = useContext(ModalContext)
+  const context = useContext(ModalContext);
   if (!context) {
-    throw new Error('useModal must be used within the modal provider')
+    throw new Error("useModal must be used within the modal provider");
   }
-  return context
-}
+  return context;
+};
 
-export default ModalProvider
+export default ModalProvider;
