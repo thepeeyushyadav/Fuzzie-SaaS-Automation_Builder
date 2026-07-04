@@ -1,11 +1,8 @@
 'use client'
-import type { NextPage } from 'next'
-import React from 'react'
-import { useEffect, useState } from 'react'
-import Particles, { initParticlesEngine } from '@tsparticles/react'
-import type { Container, Engine } from '@tsparticles/engine'
+import React, { useCallback } from 'react'
+import Particles, { ParticlesProvider, useParticlesProvider } from '@tsparticles/react'
+import type { Container } from '@tsparticles/engine'
 import { loadSlim } from '@tsparticles/slim'
-
 import { motion, useAnimation } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
@@ -20,7 +17,20 @@ type ParticlesProps = {
   particleColor?: string
   particleDensity?: number
 }
+
 export const SparklesCore = (props: ParticlesProps) => {
+  const initParticles = useCallback(async (engine: any) => {
+    await loadSlim(engine)
+  }, [])
+
+  return (
+    <ParticlesProvider init={initParticles}>
+      <SparklesInner {...props} />
+    </ParticlesProvider>
+  )
+}
+
+const SparklesInner = (props: ParticlesProps) => {
   const {
     id,
     className,
@@ -31,14 +41,7 @@ export const SparklesCore = (props: ParticlesProps) => {
     particleColor,
     particleDensity,
   } = props
-  const [init, setInit] = useState(false)
-  useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine)
-    }).then(() => {
-      setInit(true)
-    })
-  }, [])
+  const { loaded: init } = useParticlesProvider()
   const controls = useAnimation()
 
   const particlesLoaded = async (container?: Container) => {
