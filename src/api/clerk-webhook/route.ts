@@ -9,31 +9,20 @@ export async function POST(req: Request) {
     const email = email_addresses[0]?.email_address
     console.log('✅', body)
 
-    // Pehle email se existing user dhundho
-    const existingUser = await db.user.findUnique({ where: { email } })
-
-    if (existingUser) {
-      // Email se user mila — clerkId aur baaki update karo
-      await db.user.update({
-        where: { email },
-        data: {
-          clerkId: id,
-          name: first_name,
-          profileImage: image_url,
-        },
-      })
-    } else {
-      // Naya user banao
-      await db.user.create({
-        data: {
-          clerkId: id,
-          email,
-          name: first_name || '',
-          profileImage: image_url || '',
-        },
-      })
-    }
-
+    await db.user.upsert({
+      where: { clerkId: id },
+      update: {
+        email,
+        name: first_name,
+        profileImage: image_url,
+      },
+      create: {
+        clerkId: id,
+        email,
+        name: first_name || '',
+        profileImage: image_url || '',
+      },
+    })
     return new NextResponse('User updated in database successfully', {
       status: 200,
     })
