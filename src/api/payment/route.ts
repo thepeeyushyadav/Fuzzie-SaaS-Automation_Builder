@@ -2,10 +2,7 @@ import { NextResponse, NextRequest } from 'next/server'
 import Stripe from 'stripe'
 
 export async function GET(req: NextRequest) {
-  const stripe = new Stripe(process.env.STRIPE_SECRET!, {
-    typescript: true,
-    apiVersion: '2023-10-16',
-  })
+  const stripe = new Stripe(process.env.STRIPE_SECRET!)
 
   const products = await stripe.prices.list({
     limit: 3,
@@ -15,10 +12,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const stripe = new Stripe(process.env.STRIPE_SECRET!, {
-    typescript: true,
-    apiVersion: '2023-10-16',
-  })
+  const stripe = new Stripe(process.env.STRIPE_SECRET!)
   const data = await req.json()
   const session = await stripe.checkout.sessions.create({
     line_items: [
