@@ -3,7 +3,7 @@ import { currentUser } from '@clerk/nextjs/server'
 import { db } from '@/lib/db'
 import { getOrCreateDbUser } from '@/lib/get-or-create-user'
 import Link from 'next/link'
-import { GitBranch, Link2, Zap, ArrowRight } from 'lucide-react'
+import { GitBranch, Link2, ArrowRight } from 'lucide-react'
 
 const DashboardPage = async () => {
   const user = await currentUser()
@@ -12,7 +12,7 @@ const DashboardPage = async () => {
   await getOrCreateDbUser()
 
   // Fetch dashboard data
-  const [workflows, connections, dbUser] = await Promise.all([
+  const [workflows, connections] = await Promise.all([
     db.workflows.findMany({
       where: { userId: user.id },
       orderBy: { name: 'asc' },
@@ -21,16 +21,11 @@ const DashboardPage = async () => {
     db.connections.findMany({
       where: { userId: user.id },
     }),
-    db.user.findFirst({
-      where: { clerkId: user.id },
-      select: { credits: true, tier: true },
-    }),
   ])
 
   const totalWorkflows = workflows.length
   const publishedWorkflows = workflows.filter((w) => w.publish).length
   const totalConnections = connections.length
-  const credits = dbUser?.credits || 'Unlimited'
 
   return (
     <div className="flex flex-col gap-4 relative">
@@ -72,18 +67,6 @@ const DashboardPage = async () => {
             <p className="text-3xl font-bold">{totalConnections}</p>
             <p className="text-xs text-muted-foreground mt-1">
               Active integrations
-            </p>
-          </div>
-          <div className="rounded-xl border bg-card p-6">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="rounded-lg bg-primary/10 p-2">
-                <Zap className="h-5 w-5 text-primary" />
-              </div>
-              <span className="text-sm text-muted-foreground">Credits</span>
-            </div>
-            <p className="text-3xl font-bold">{credits}</p>
-            <p className="text-xs text-muted-foreground mt-1">
-              {dbUser?.tier || 'Free'} plan
             </p>
           </div>
         </div>

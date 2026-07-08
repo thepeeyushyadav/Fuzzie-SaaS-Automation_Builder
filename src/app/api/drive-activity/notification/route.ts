@@ -21,9 +21,9 @@ export async function POST(req: NextRequest) {
       where: {
         googleResourceId: channelResourceId,
       },
-      select: { clerkId: true, credits: true },
+      select: { clerkId: true },
     })
-    if ((user && parseInt(user.credits!) > 0) || user?.credits == 'Unlimited') {
+    if (user) {
       const workflow = await db.workflows.findMany({
         where: {
           userId: user.clerkId,
@@ -116,14 +116,7 @@ export async function POST(req: NextRequest) {
             current++
           }
 
-         await db.user.update({
-            where: {
-              clerkId: user.clerkId,
-            },
-            data: {
-              credits: `${parseInt(user.credits!) - 1}`,
-            },
-          })
+         // Credit system disabled — no deduction
         })
         return Response.json(
           {
