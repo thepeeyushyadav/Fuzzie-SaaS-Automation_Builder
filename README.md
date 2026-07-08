@@ -13,10 +13,15 @@
   A powerful, multi-tenant SaaS automation platform (similar to Zapier) that allows users to create visual, drag-and-drop workflows connecting their favorite apps like Google Drive, Notion, Slack, and Discord.
 </p>
 
+<p align="center">
+  <strong>🔴 Live Demo:</strong> <a href="https://fuzzie-saa-s-automation-builder.vercel.app/" target="_blank">https://fuzzie-saa-s-automation-builder.vercel.app/</a>
+</p>
+
 <br />
 
 <div align="center">
-  <img src="./public/Screenshot%202026-07-08%20115449.png" alt="Fuzzie Dashboard" width="100%" style="border-radius: 12px; box-shadow: 0px 4px 20px rgba(0,0,0,0.5);" />
+  <img src="./public/Screenshot%202026-07-08%20115449.png" alt="Fuzzie Dashboard" width="100%" style="border-radius: 12px; box-shadow: 0px 4px 20px rgba(0,0,0,0.5); margin-bottom: 20px;" />
+  <img src="./public/git.png" alt="Fuzzie Visual Builder" width="100%" style="border-radius: 12px; box-shadow: 0px 4px 20px rgba(0,0,0,0.5);" />
 </div>
 
 <br />
@@ -153,7 +158,8 @@ Follow these instructions to get a copy of the project up and running on your lo
    bun run dev
    ```
 
-The application will be running on `http://localhost:3000`.
+The application will be running locally on `http://localhost:3000`. 
+Alternatively, you can access the live deployed version here: [https://fuzzie-saa-s-automation-builder.vercel.app/](https://fuzzie-saa-s-automation-builder.vercel.app/)
 
 *(Note: To test automations locally, you must run `ngrok http 3000` and use the ngrok URL as your webhook destination in your Google/Stripe developer consoles).*
 
