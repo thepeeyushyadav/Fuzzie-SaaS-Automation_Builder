@@ -6,9 +6,16 @@ export async function GET(req: NextRequest) {
 
   const products = await stripe.prices.list({
     limit: 3,
+    expand: ['data.product'],
   })
 
-  return NextResponse.json(products.data)
+  // Normalize so each price has a nickname (use product name as fallback)
+  const normalized = products.data.map((price: any) => ({
+    ...price,
+    nickname: price.nickname || price.product?.name || 'Plan',
+  }))
+
+  return NextResponse.json(normalized)
 }
 
 export async function POST(req: NextRequest) {
@@ -23,8 +30,8 @@ export async function POST(req: NextRequest) {
     ],
     mode: 'subscription',
     success_url:
-      'https://localhost:3000/billing?session_id={CHECKOUT_SESSION_ID}',
-    cancel_url: 'https://localhost:3000/billing',
+      `${process.env.NEXT_PUBLIC_URL}/billing?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${process.env.NEXT_PUBLIC_URL}/billing`,
   })
   return NextResponse.json(session.url)
 }

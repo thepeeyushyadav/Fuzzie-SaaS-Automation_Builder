@@ -65,7 +65,10 @@ const ContentBasedOnTitle = ({
         toast.error('Something went wrong')
       }
     }
-    reqGoogle()
+    // Only fetch if file data hasn't been loaded yet
+    if (!file || JSON.stringify(file) === '{}') {
+      reqGoogle()
+    }
   }, [])
 
   // @ts-ignore

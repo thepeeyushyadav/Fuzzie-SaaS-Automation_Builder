@@ -2,9 +2,8 @@ import React from 'react'
 
 type Props = { children: React.ReactNode }
 
-const Layout = ({ children }: Props) => {
+const LandingLayout = ({ children }: Props) => {
   return <>{children}</>
 }
 
-export default Layout
-
+export default LandingLayout

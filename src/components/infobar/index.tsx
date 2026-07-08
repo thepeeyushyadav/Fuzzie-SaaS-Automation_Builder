@@ -21,10 +21,15 @@ const InfoBar = (props: Props) => {
   const { credits, tier, setCredits, setTier } = useBilling()
 
   const onGetPayment = async () => {
-    const response = await onPaymentDetails()
-    if (response) {
-      setTier(response.tier!)
-      setCredits(response.credits!)
+    try {
+      const response = await onPaymentDetails()
+      if (response) {
+        setTier(response.tier || 'Unlimited')
+        setCredits(response.credits || 'Unlimited')
+      }
+    } catch (error) {
+      // Keep defaults (Unlimited) on failure - everything is free during launch
+      console.log('Payment details fetch skipped - using free tier defaults')
     }
   }
 

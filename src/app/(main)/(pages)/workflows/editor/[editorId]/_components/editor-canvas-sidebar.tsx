@@ -37,11 +37,12 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
   const { state } = useEditor()
   const { nodeConnection } = useNodeConnections()
   const { googleFile, setSlackChannels } = useFuzzieStore()
+  const selectedNodeTitle = state.editor.selectedNode.data.title
   useEffect(() => {
-    if (state) {
+    if (state && selectedNodeTitle) {
       onConnections(nodeConnection, state, googleFile)
     }
-  }, [state])
+  }, [selectedNodeTitle])
 
   useEffect(() => {
     if (nodeConnection.slackNode.slackAccessToken) {

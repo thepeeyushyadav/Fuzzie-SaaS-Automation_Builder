@@ -73,7 +73,7 @@ const BillingDashboard = (props: Props) => {
           </div>
           <CreditTracker
             tier={tier}
-            credits={parseInt(credits)}
+            credits={parseInt(credits) || 0}
           />
         </>
       {/* )} */}

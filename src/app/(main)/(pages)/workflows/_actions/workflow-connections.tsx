@@ -2,9 +2,10 @@
 import { Option } from '@/components/ui/multiple-selector'
 import { db } from '@/lib/db'
 import { auth, currentUser } from '@clerk/nextjs/server'
+import { getOrCreateDbUser } from '@/lib/get-or-create-user'
 
 export const getGoogleListener = async () => {
-  const { userId } = auth()
+  const { userId } = await auth()
 
   if (userId) {
     const listener = await db.user.findUnique({
@@ -138,6 +139,9 @@ export const onCreateNodeTemplate = async (
 export const onGetWorkflows = async () => {
   const user = await currentUser()
   if (user) {
+    // Ensure user exists in DB (creates if not exists for local dev)
+    await getOrCreateDbUser()
+
     const workflow = await db.workflows.findMany({
       where: {
         userId: user.id,

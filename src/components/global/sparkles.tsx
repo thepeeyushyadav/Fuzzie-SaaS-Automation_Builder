@@ -166,7 +166,7 @@ const SparklesInner = (props: ParticlesProps) => {
                 fill: true,
                 options: {},
                 type: {} as any,
-              },
+              } as any,
               groups: {},
               move: {
                 angle: {
@@ -227,7 +227,7 @@ const SparklesInner = (props: ParticlesProps) => {
                 },
                 vibrate: false,
                 warp: false,
-              },
+              } as any,
               number: {
                 density: {
                   enable: true,
@@ -274,7 +274,7 @@ const SparklesInner = (props: ParticlesProps) => {
                 fill: true,
                 options: {},
                 type: 'circle',
-              },
+              } as any,
               size: {
                 value: {
                   min: minSize || 1,

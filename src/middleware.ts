@@ -4,6 +4,10 @@ const isPublicRoute = createRouteMatcher([
   '/',
   '/sign-in(.*)',
   '/sign-up(.*)',
+  '/products',
+  '/resources',
+  '/documentation',
+  '/enterprise',
   '/api/clerk-webhook',
   '/api/drive-activity/notification',
   '/api/payment/success',
@@ -27,7 +31,7 @@ export default clerkMiddleware(async (auth, req) => {
 })
 
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+  matcher: ['/((?!.+\\.\\w+$|_next).*)', '/', '/(api|trpc)(.*)'],
 }
 
 // https://www.googleapis.com/auth/userinfo.email
