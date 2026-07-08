@@ -4,13 +4,15 @@
   <img src="https://img.shields.io/badge/Prisma-2D3748?logo=prisma&logoColor=white" alt="Prisma" />
   <img src="https://img.shields.io/badge/PostgreSQL-316192?logo=postgresql&logoColor=white" alt="Neon Postgres" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/Clerk_Auth-6C47FF?logo=clerk&logoColor=white" alt="Clerk Auth" />
   <img src="https://img.shields.io/badge/Stripe-626CD9?logo=stripe&logoColor=white" alt="Stripe" />
+  <img src="https://img.shields.io/badge/React_Flow-FF0072?logo=react&logoColor=white" alt="React Flow" />
 </div>
 
-<h1 align="center">Fuzzie - SaaS Automation Builder</h1>
+<h1 align="center">Fuzzie - Enterprise SaaS Automation Builder</h1>
 
 <p align="center">
-  A powerful, multi-tenant SaaS automation platform (similar to Zapier) that allows users to create visual, drag-and-drop workflows connecting their favorite apps like Google Drive, Notion, Slack, and Discord.
+  A highly scalable, multi-tenant SaaS platform that acts as your personal automation engine. Fuzzie empowers users to connect disparate web applications (Google Drive, Notion, Slack, Discord) and create powerful, real-time automated workflows using a stunning visual node editor—comparable to industry giants like Zapier or Make.com.
 </p>
 
 <p align="center">
@@ -20,150 +22,184 @@
 <br />
 
 <div align="center">
-  <img src="./public/Screenshot%202026-07-08%20115449.png" alt="Fuzzie Dashboard" width="100%" style="border-radius: 12px; box-shadow: 0px 4px 20px rgba(0,0,0,0.5); margin-bottom: 20px;" />
-  <img src="./public/git.png" alt="Fuzzie Visual Builder" width="100%" style="border-radius: 12px; box-shadow: 0px 4px 20px rgba(0,0,0,0.5);" />
+  <img src="./public/Screenshot%202026-07-08%20115449.png" alt="Fuzzie Dashboard Overview" width="100%" style="border-radius: 12px; box-shadow: 0px 8px 30px rgba(0,0,0,0.6); margin-bottom: 30px;" />
+  <img src="./public/git.png" alt="Fuzzie Visual Builder Canvas" width="100%" style="border-radius: 12px; box-shadow: 0px 8px 30px rgba(0,0,0,0.6);" />
 </div>
 
 <br />
 
 ---
 
-### 🚀 Technology Highlight
-*(A high-level overview of the modern tech stack powering Fuzzie)*
+## 🌟 Comprehensive Feature Breakdown
 
-🔥 **A Full Stack SaaS Application Built with:** 
-🟦 **Next.js 14 (App Router, Server Actions, API Routes)** 
-🟡 **TypeScript** 
-🟩 **Prisma ORM** 
-🐘 **Neon Serverless Postgres** 
-🔐 **Clerk (Authentication)** 
-🎨 **Tailwind CSS, Shadcn UI & Aceternity UI** 
-💳 **Stripe (Payments & Billing)** 
-🌐 **React Flow (Visual Node Editor)**
-☁️ **UploadCare (File Management)**
+Fuzzie is not just an interface; it is a complete backend event-processing engine built for production. 
 
----
+### 1. Visual Automation Canvas (React Flow)
+* **Infinite Drag & Drop Canvas:** Built on top of `reactflow`, users can drag integration nodes onto an infinite grid to design their workflow logic.
+* **Custom Nodes & Edges:** Specifically designed UI for each integration (Triggers and Actions) with custom connection pathways.
+* **Real-time State Management:** Utilizes **Zustand** alongside React Context to instantly reflect canvas changes, saving node positioning and connection states to the database securely.
 
-### ⚡ Project Overview
+### 2. Powerful Integrations & Webhooks
+* **Google Drive (Trigger):** Automatically listens to user's Google Drive via secure push-webhooks. Whenever a file is created or modified, Fuzzie catches the payload and triggers the associated automation.
+* **Slack (Action):** Authenticated via Slack OAuth. Fuzzie can dynamically push messages to specific Slack channels based on upstream data.
+* **Discord (Action):** Discord Bot integration allows Fuzzie to post real-time alerts into designated Discord servers.
+* **Notion (Action):** Connects to Notion workspaces to automatically append new items, pages, or data entries into Notion Databases.
 
-Fuzzie is a robust SaaS workflow automation platform designed to save time by connecting different web apps seamlessly. Users can build complex automations using a beautiful, interactive node-based visual editor.
+### 3. Enterprise-Grade Authentication & Security
+* **Clerk Integration:** Complete user lifecycle management including Secure Sign-In, Sign-Up, password recovery, and session management.
+* **OAuth2 Flows:** Secure, custom-built token exchange flows for users granting access to their third-party apps (Google, Slack, etc.). Tokens are stored securely in the Postgres database.
 
-**Key Capabilities:**
-* Create complex, multi-step **Automations & Workflows** using a drag-and-drop canvas.
-* Connect external accounts via robust **OAuth2 Integrations**.
-* **Supported Integrations:** 
-  * 📁 **Google Drive** (File creation/modification triggers)
-  * 💬 **Slack** (Send channel messages)
-  * 🎮 **Discord** (Send server messages)
-  * 📝 **Notion** (Create database items)
-* Manage active connections and view workflow execution logs.
-* Process payments, manage subscription tiers, and track API credits via an integrated **Stripe** billing portal.
-* Beautiful, dark-mode first UI using **Aceternity UI** and **Shadcn**.
+### 4. Billing, Subscriptions & Credits
+* **Stripe Payment Gateway:** Integrated checkout sessions using Stripe.
+* **Tiered Subscriptions:** Handles different pricing tiers (Free, Pro, Unlimited) with recurring billing.
+* **Credit Tracking System:** Each workflow execution burns a "credit". The platform actively tracks credits per user, gating executions if limits are reached, and dynamically updating via Stripe webhooks upon subscription upgrades.
+
+### 5. Beautiful & Modern UI/UX
+* **Aceternity UI & Framer Motion:** The landing page features state-of-the-art 3D hover effects, animated glowing backgrounds, and smooth scroll transitions.
+* **Shadcn UI + Tailwind CSS:** A fully accessible, dark-mode-first component library ensuring a premium, unified aesthetic across all dashboards, modals, and forms.
+* **UploadCare:** Integrated dropzones for seamless and optimized file uploads.
 
 ---
 
-### 🏗️ Detailed Project Architecture
+## 🏗️ System Architecture & Data Flow
 
-Fuzzie relies heavily on Next.js Server Components, Server Actions, and Background API Webhooks for real-time automation execution.
-
-#### Architecture Diagram
+Fuzzie relies entirely on Next.js Server Actions for client-to-database mutations and Edge API routes for receiving high-throughput webhooks.
 
 ```mermaid
 graph TD
-    Client[User Browser] -->|Auth| Clerk[Clerk Auth]
-    Client -->|UI Interactions| Next[Next.js App Router]
-    
-    Next -->|Server Actions| DBQueries[Prisma Database Queries]
-    DBQueries --> Neon[(Neon Postgres DB)]
+    subgraph Frontend [Next.js App Router UI]
+        Landing[Landing Page / Pricing]
+        Dashboard[User Dashboard]
+        Editor[React Flow Visual Builder]
+    end
 
-    Client -->|Build Workflow| ReactFlow[React Flow Canvas]
-    ReactFlow -->|Save Nodes/Edges| DBQueries
+    subgraph Authentication
+        ClerkAuth[Clerk Identity Provider]
+    end
 
-    Google[Google Drive Webhook] -->|Trigger| API[Next.js API Route /api/drive-activity]
-    API -->|Validate User & Credits| DBQueries
-    API -->|Execute Nodes| AutomationEngine[Workflow Execution Engine]
+    subgraph Backend [Next.js Server]
+        Actions[Server Actions]
+        OAuth[OAuth Callback Handlers]
+        StripeWebhook[Stripe Billing Webhooks]
+        DriveWebhook[Google Drive Webhook Listener]
+        Engine[Automation Execution Engine]
+    end
 
-    AutomationEngine -->|Action| Slack[Slack API]
-    AutomationEngine -->|Action| Discord[Discord API]
-    AutomationEngine -->|Action| Notion[Notion API]
+    subgraph Database [Neon Postgres via Prisma]
+        Users[(Users & Credits)]
+        Workflows[(Saved Workflows)]
+        Connections[(OAuth Access Tokens)]
+    end
 
-    Stripe[Stripe Webhooks] -->|Update Tier/Credits| DBQueries
+    subgraph External Platforms
+        Google[Google Drive]
+        Notion[Notion API]
+        Slack[Slack API]
+        Discord[Discord API]
+        Stripe[Stripe API]
+    end
+
+    %% Flow Connections
+    Landing --> ClerkAuth
+    Dashboard --> Actions
+    Editor -->|Saves Node Graph| Actions
+    Actions --> Workflows
+
+    OAuth --> Connections
+    StripeWebhook --> Users
+
+    Google -->|Push Event Payload| DriveWebhook
+    DriveWebhook -->|Validates Credits| Users
+    DriveWebhook -->|Fetches Logic| Workflows
+    DriveWebhook --> Engine
+
+    Engine -->|Reads Tokens| Connections
+    Engine -->|Fires Action| Slack
+    Engine -->|Fires Action| Discord
+    Engine -->|Fires Action| Notion
 ```
 
-#### Data Flow Explained
-The platform handles two main complex flows: Building Workflows and Executing Automations.
+---
 
-1. **Building Workflows (React Flow):**
-   - **Client:** The user drags integration nodes (e.g., Google Drive Trigger, Slack Action) onto the canvas.
-   - **State:** Zustand manages the local state of nodes and edges.
-   - **Server (Action):** Upon clicking save, a Server Action processes the JSON representation of the nodes and securely saves them to Neon Postgres via Prisma.
+## 🛠️ Complete Technology Stack
 
-2. **Executing Automations (Webhooks):**
-   - **Trigger:** A third-party app (e.g., Google Drive) sends a webhook payload to a public Next.js API route when an event occurs (e.g., new file created).
-   - **Verification:** The API route verifies the user's Clerk ID and checks if they have sufficient automation credits.
-   - **Execution:** The server retrieves the user's saved workflow from the database, parses the steps, and sequentially fires outgoing API requests to the connected services (Slack, Discord, Notion).
+| Domain | Technology Used |
+| :--- | :--- |
+| **Framework** | Next.js 14 (App Router, Server Components) |
+| **Language** | TypeScript |
+| **Visual Node Editor** | React Flow |
+| **Database** | Neon Serverless Postgres |
+| **ORM** | Prisma |
+| **Authentication** | Clerk |
+| **Payments** | Stripe |
+| **Styling & UI** | Tailwind CSS, Shadcn UI, Aceternity UI, Lucide React |
+| **Animations** | Framer Motion |
+| **State Management**| Zustand, React Context API |
+| **Forms & Validation**| React Hook Form, Zod |
+| **File Storage** | UploadCare |
 
 ---
 
-### 📂 Key Features & Directory Structure
+## 🚀 Getting Started (Local Development)
 
-🔑 **Core Modules:**
+### Prerequisites
+* **Node.js** (v18+) or **Bun**
+* A **NeonDB** (Postgres) connection string
+* Developer accounts for **Clerk, Stripe, Google Cloud, Notion, Slack, Discord**
+* **Ngrok** (crucial for local webhook testing)
 
-* `src/app/page.tsx`: **Public Landing Page** - Stunning animated landing page featuring Aceternity UI 3D cards and pricing tables.
-* `src/app/(main)/(pages)/dashboard`: **User Dashboard** - Overview of active workflows, connected integrations, and credit usage.
-* `src/app/(main)/(pages)/connections`: **Integration Hub** - OAuth connection management for Discord, Google, Notion, and Slack.
-* `src/app/(main)/(pages)/workflows/editor/[editorId]`: **Visual Automation Editor** - The core workspace where users build their logic using `reactflow`.
-* `src/app/api/auth/callback/[service]`: **OAuth Callbacks** - Secure endpoints handling token exchanges for third-party integrations.
-* `src/app/api/drive-activity/notification`: **Webhook Listener** - The main entry point that listens to Google Drive changes and triggers user workflows.
-* `src/components/global`: **Shared UI** - Custom modals, navigation, and info bars used across the application.
+### 1. Clone & Install
+```bash
+git clone https://github.com/your-username/fuzzie-app.git
+cd fuzzie-app
+bun install
+```
 
----
+### 2. Environment Variables
+Create a `.env` file in the root. You must configure the following parameters (refer to a `.env.example` if needed):
+* `DATABASE_URL` (Neon Postgres)
+* Clerk Secret and Publishable Keys
+* Stripe Secret Key and Webhook Secret
+* OAuth Client IDs & Secrets for Google, Slack, Discord, Notion
+* `NEXT_PUBLIC_URL` (usually `http://localhost:3000`)
+* `NGROK_URI` (your ngrok forwarding URL for webhooks)
 
-### ⚙️ Getting Started / How to Run
+### 3. Database Initialization
+Push the Prisma schema to your Postgres instance and generate the client:
+```bash
+bunx prisma generate
+bunx prisma db push
+```
 
-Follow these instructions to get a copy of the project up and running on your local machine.
+### 4. Run the Servers
+To develop locally and test actual triggers from Google Drive, you need two terminals:
 
-*Prerequisites:*
-* **Bun** or **Node.js** (v18+)
-* **NeonDB** (or any Postgres Database)
-* **Clerk Account** (For Auth)
-* **Stripe Account** (For Billing)
-* **Ngrok** (For testing local webhooks)
-* **Developer Accounts** for Google, Slack, Discord, and Notion (For OAuth apps)
-
-#### Local Development Setup
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/your-username/fuzzie-app.git
-   cd fuzzie-app
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   bun install
-   ```
-
-3. **Initialize Environment Variables:**
-   Create a `.env` file in the root directory. You will need to populate it with database URLs, Clerk keys, Stripe secrets, and OAuth Client IDs for all integrations.
-
-4. **Initialize the Database:**
-   ```bash
-   bunx prisma generate
-   bunx prisma db push
-   ```
-
-5. **Start the development server:**
-   ```bash
-   bun run dev
-   ```
-
-The application will be running locally on `http://localhost:3000`. 
-Alternatively, you can access the live deployed version here: [https://fuzzie-saa-s-automation-builder.vercel.app/](https://fuzzie-saa-s-automation-builder.vercel.app/)
-
-*(Note: To test automations locally, you must run `ngrok http 3000` and use the ngrok URL as your webhook destination in your Google/Stripe developer consoles).*
+**Terminal 1 (Next.js):**
+```bash
+bun run dev
+```
+**Terminal 2 (Ngrok):**
+```bash
+ngrok http 3000
+```
+*Note: Ensure your Google Drive webhook subscriptions point to your `https://<ngrok-id>.ngrok-free.app/api/drive-activity/notification` endpoint.*
 
 ---
 
-### ✍️ Built By
-This software is developed and managed by **Piyush Yadav**.
+## 🌍 Deployment
+
+Fuzzie is optimized for deployment on **Vercel**. 
+
+1. Push your code to GitHub.
+2. Import the project in Vercel.
+3. Vercel will automatically detect Next.js. 
+4. **Crucial:** Ensure your build script in `package.json` runs Prisma generation to prevent caching errors:
+   `"build": "prisma generate && next build"`
+5. Paste all your environment variables into Vercel settings.
+6. Deploy.
+7. Update all your OAuth redirect URIs in Google, Slack, Discord, and Notion developer consoles to your new `https://your-app.vercel.app` domain.
+
+---
+
+### ✍️ Built & Maintained By
+**Piyush Yadav**
